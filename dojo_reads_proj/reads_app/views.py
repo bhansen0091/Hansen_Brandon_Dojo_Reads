@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from login_app.models import User
 
-def wall_index(request):
+def books_index(request):
     if not 'user_id' in request.session:
         messages.error(request, "You are not logged in.")
         return redirect("/")
@@ -10,4 +10,4 @@ def wall_index(request):
     context = {
         "user_first_name": user_first_name
     }
-    return render(request, "wall_index.html", context)
+    return render(request, "books_index.html", context)
