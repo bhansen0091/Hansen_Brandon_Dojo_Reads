@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+    <div id="wrapper">
+        <header class="page_header">
+            <h1>Add a New Book Title and a Review</h1>
+
+        </header>
+        <main class="content_section">
+            <div class="form_container main_content_split">
+                <form action="/books/create" class="create_book_form"
+                    method="POST">
+                    {% csrf_token %}
+                    <h2>Add a Book</h2>
+                    <div class="title_section text_inputs_section">
+                        <label for="title">Title:</label>
+                        <input type="text" name="title"
+                            class="text_inputs" maxlength="255" >
+                    </div>
+                    <div class="add_author">
+                        <label for="author">Author:</label>
+                        <div class="exsisting_author">
+                            <label for="author">Exsisting Authors</label>
+                            <select name="author">
+                                {% for author in authors %}
+                                <option value="">{{author.name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="new_author">
+                            <label for="add_new_author">New Author</label>
+                            <input type="text" name="add_new_author"
+                                class="add_new_author">
+                        </div>
+                        <div class="rating_section">
+                            <p>
+                                <label for="rating" class="rating">Rating:</label>
+                                <input type="number" name="rating">
+                                stars.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="add_review_section">
+                        <label for="review_comment">Review:</label>
+                        <textarea name="review_comment" cols="30" rows="10"
+                            class="review_comment"></textarea>
+                    </div>
+                    <button type="submit"
+                        name="add_book_submit_btn">Add</button>
+                </form>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

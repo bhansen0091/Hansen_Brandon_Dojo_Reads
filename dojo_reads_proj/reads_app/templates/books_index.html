@@ -7,8 +7,31 @@
     <title>Exam Template</title>
 </head>
 <body>
-    <h1>Testing</h1>
-    <p>{{user_first_name}}</p>
-    <a href="/users/logout">Log Out</a>
+    <div class="wrapper">
+        <header class="page_header">
+            <h2>Welcome {{user_first_name}}</h2>
+            <a href="/books/add">Add a Book and Review</a>
+            <a href="/users/logout">Log Out</a>
+        </header>
+        <main class="main_content">
+            <div class="mc_left_side review_section">
+                <h3>Recent Book Reviews:</h3>
+                {% for review in reviews %}
+                <p>
+                    <a href="/books/{{review.book.id}}">{{review.book.title}}</a>
+                    {{review.rating}}
+                    {{review.created_by.first_name}}
+                    {{review.created_at}}
+                </p>
+                {% endfor %}
+            </div>
+            <div class="right_side">
+                <h3>Other Books with Reviews</h3>
+                {% for book in books %}
+                <a href="/books/{{book.id}}">{{book.title}}</a><br>
+                {% endfor %}
+            </div>
+        </main>
+    </div>
 </body>
 </html>

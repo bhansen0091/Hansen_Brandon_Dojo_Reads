@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books</title>
+</head>
+
+<body>
+    <div class="wrapper">
+        <header class="page_header">
+            {{book.title}}
+            {% for author in book.authors.all %}
+            {{author.name}}
+            {% endfor %}
+            <a href="/books">Home</a>
+            <a href="/users/logout">Log Out</a>
+        </header>
+        <main class="main_content">
+            <div class="left_side">
+                <h3>Reviews</h3>
+                {% for reviews in book.reviews.all %}
+                {{reviews.rating}}
+                {{reviews.created_by.first_name}}
+                {{reviews.comment}}
+                {{reviews.created_at}}
+                {% if reviews.created_by.id == request.session.user_id %}
+                <a href="/books/{{book.id}}/review/{{reviews.id}}/delete">Delete Review</a>
+                {% endif %}<br>
+                {% endfor %}
+            </div>
+            <div class="right_side">
+                <form action="/books/{{book.id}}/review/new" class="add_review_form" method="POST">
+                    {% csrf_token %}
+                    <div class="rating_section">
+                        <p>
+                            <label for="rating" class="rating">Rating:</label>
+                            <input type="number" name="rating">
+                            stars.
+                        </p>
+                    </div>
+                    <div class="add_review_section">
+                        <label for="review_comment">Review:</label>
+                        <textarea name="review_comment" cols="30" rows="10"
+                            class="review_comment"></textarea>
+                    </div>
+                    <button type="submit" name="review_submit_btn">Add</button>
+                </form>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>
